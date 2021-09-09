@@ -1,42 +1,47 @@
 public class Deque<E> implements IDeque<E> {
 
 
-    private final E[] data;
+    private  E[] data;
     private final int TAIL_DEFAULT = -1;
     private final int HEAD_DEFAULT = 0;
     private int size;
-    private int tailRight;
-    private int tailLeft;
-    private int headLeft;
-    private int headRight;
+    private int tail;
+    private int head;
 
     public Deque(int maxSize) {
         this.data = (E[]) new Object[maxSize];
-        headLeft = HEAD_DEFAULT;
-        headRight = maxSize - 1;
-        tailRight = TAIL_DEFAULT;
-        tailLeft = maxSize;
+        head = HEAD_DEFAULT;
+        tail = TAIL_DEFAULT;
     }
 
-
-    @Override
-    public boolean insertLeft(E value) {
-        if (isFull()) {
-            return false;
-        }
-        data[++tailRight] = value;
-        size++;
-
-        return true;
-    }
 
     @Override
     public boolean insertRight(E value) {
         if (isFull()) {
             return false;
         }
-        data[--tailLeft] = value;
+        data[++tail] = value;
         size++;
+
+        return true;
+    }
+
+    @Override
+    public boolean insertLeft(E value) {
+        if (isFull()) {
+            return false;
+        }
+        if (size == data.length - 1 ) {
+            E [] a= (E[]) new Object[data.length*2];
+            System.arraycopy(data,0,a,0,data.length);
+            data= a;
+        }
+            for (int i = data.length - 1; i > 0; i--) {
+                data[i] = data[i - 1];
+            }
+            tail++;
+            data[0] = value;
+            size++;
 
         return true;
     }
@@ -46,7 +51,7 @@ public class Deque<E> implements IDeque<E> {
         if (isEmpty()) {
             return null;
         }
-        E value = data[headLeft++];
+        E value = data[head++];
         size--;
         return null;
     }
@@ -56,14 +61,14 @@ public class Deque<E> implements IDeque<E> {
         if (isEmpty()) {
             return null;
         }
-        E value = data[headRight--];
+        E value = data[tail--];
         size--;
         return null;
     }
 
     @Override
     public E peekFront() {
-        return data[headLeft];
+        return data[head];
     }
 
     @Override
@@ -91,9 +96,9 @@ public class Deque<E> implements IDeque<E> {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("[");
-        for (int i = headLeft; i <= headRight; i++) {
+        for (int i = head; i <= tail; i++) {
             sb.append(data[i]);
-            if (i != headRight) {
+            if (i != tail) {
                 sb.append(", ");
 
             }

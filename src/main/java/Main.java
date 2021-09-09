@@ -9,27 +9,21 @@ public class Main {
         System.out.println(toFind(arr));
         System.out.println(toFind(arr2));
         System.out.println(toFind(arr3));
-        Deque<Integer> deque = new Deque<>(6);
+        Deque<Integer> deque = new Deque<>(8);
+        deque.insertLeft(1);
+        deque.insertLeft(2);
+        deque.insertLeft(3);
+        deque.insertLeft(4);
+        deque.insertRight(8);
+        deque.insertRight(18);
+        deque.display();
 
-        deque.insertLeft(101);
-        deque.insertLeft(102);
-        deque.insertLeft(103);
-        deque.insertLeft(104);
-        deque.display();
-        deque.removeLeft();
-        deque.removeLeft();
-        deque.removeLeft();
-        deque.removeLeft();
-        deque.display();
-        deque.removeRight();
-        deque.removeRight();
-        deque.display();
-        deque.insertRight(200);
-        deque.insertRight(201);
-        deque.display();
-        deque.removeRight();
-        deque.removeRight();
-        deque.display();
+
+
+
+
+
+
 
 
 
